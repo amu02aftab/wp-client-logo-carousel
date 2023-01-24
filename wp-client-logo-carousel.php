@@ -202,7 +202,7 @@ function wpaft_logo_slider_callback( $atts ) {
 	//echo $slider_settings;
 	
     $order_by='date';//default value
-	if($slider_settings['slide_orderby']!=''){
+	if(is_array($slider_settings) && !empty($slider_settings['slide_orderby'])){
      $order_by = $slider_settings['slide_orderby']; 
 	}
 	$order= 'DESC';
@@ -211,8 +211,8 @@ function wpaft_logo_slider_callback( $atts ) {
 	}
 	
 	$category='default'; // default category
-	$add_id='default';
-	if( isset($atts['category']) and $atts['category'] !=''){
+	// Verify $atts is array and category index is not empty
+	if(is_array($atts) && !empty($atts['category'])){
 		$add_id=$atts['category']; //additional id 
 	}
 	
@@ -239,9 +239,9 @@ function wpaft_logo_slider_callback( $atts ) {
 	/*
  *  Initialize the slider
  */
-
+	<?php $slider_id = $add_id ?? 0; ?>
 		jQuery(document).ready(function($){ 
-			jQuery("#wpaft-logo-slider-<?php echo $add_id;?>").owlCarousel({
+			jQuery("#wpaft-logo-slider-<?php echo $slider_id;?>").owlCarousel({
 				items: 				Number(wpaft.items),
 				slideSpeed: 		Number(wpaft.slide_speed),
 				paginationSpeed: 	Number(wpaft.pagination_speed),
